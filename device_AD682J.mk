@@ -1,13 +1,13 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+#$(call inherit-product, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product-if-exists, vendor/innos/SF-AD682J/AD682J_vendor.mk)
+$(call inherit-product-if-exists, vendor/innos/AD682J/AD682J_vendor.mk)
 
-DEVICE_PACKAGE_OVERLAYS += device/innos/SF-AD682J/overlay
+DEVICE_PACKAGE_OVERLAYS += device/innos/AD682J/overlay
 
-LOCAL_PATH := device/innos/SF-AD682J
+LOCAL_PATH := device/innos/AD682J
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
 else
@@ -15,7 +15,11 @@ else
 endif
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
+    $(LOCAL_KERNEL):kernel \
+	$(LOCAL_PATH)/nv_set:root/nv_set \
+	$(LOCAL_PATH)/rmt_storage_recovery:root/rmt_storage_recovery \
+	$(LOCAL_PATH)/overlay/fstab:root/etc/fstab \
+	$(LOCAL_PATH)/overlay/hosts:root/etc/hosts \
 
 $(call inherit-product, build/target/product/full.mk)
 
